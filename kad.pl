@@ -20,7 +20,6 @@ my %buckets      = ();
 my @legend       = ();
 my @legendTitles = ();
 
-
 # -------------------------------------------------------------------
 # Initialize buckets.
 # -------------------------------------------------------------------
@@ -56,7 +55,7 @@ for (my $level=1; $level<=$n; $level++) {
        if (length($n0) == $n) {
           push(@peers, $n0, $n1);
        }
-    } 
+    }
 
     $levelNodes{"${id}${left}"} = $childs;
   }
@@ -87,19 +86,28 @@ for (my $level=1; $level<=$n; $level++) {
 push(@dot, "$node [fillcolor=\"#00ff00\", shape=\"box\"]");
 
 for my $p (@peers) {
-  my $b       = undef;
-  my $bgcolor = undef;
-  my $fgcolor = undef;
+  my $b            = undef;
+  my $bgcolor      = undef;
+  my $fgcolor      = undef;
+  my $distance     = undef;
+  my $nodeP        = undef;
+  my $nodeDistance = undef;
 
   if ("$p" eq "$node") {
     next;
   }
 
-  $b       = inBucket($p, $node, \%buckets, $n);
-  $bgcolor = $b->{'bg'};
-  $fgcolor = $b->{'fg'};
+  $b        = inBucket($p, $node, \%buckets, $n);
+  $bgcolor  = $b->{'bg'};
+  $fgcolor  = $b->{'fg'};
+  $distance = oct("0b$p") ^ oct("0b$node");
 
-  push(@dot, "$p [shape=\"box\", fillcolor=\"$bgcolor\", fontcolor=\"$fgcolor\"];");
+  $nodeP        = "\"$p\"";
+  $nodeDistance = "\"d=$distance\"";
+
+  push(@dot, "$nodeP [shape=\"box\", fillcolor=\"$bgcolor\", fontcolor=\"$fgcolor\"];");
+  push(@dot, "$nodeDistance [shape=\"box\" style=\"rounded\"];");
+  push(@dot, "$nodeP -> $nodeDistance [style=invis];");
 }
 
 for (my $level=1; $level<$n; $level++) {
@@ -149,7 +157,7 @@ for (my $i=0; $i<int(@legendTitles)-1; $i++) {
 
 my $dotHeader = <<END;
 digraph unix {
- 	node [style=filled]; 
+ 	node [style=filled];
 END
 
 @legend = map { "\t\t" . $_ } @legend;
@@ -212,7 +220,7 @@ sub distance {
     my $dg = "$d1" eq "$d2" ? 0 : 1;
 
     if ($dg == 1) {
-       $res += 2 ** $pow; 
+       $res += 2 ** $pow;
     }
 
     $pow -= 1;
@@ -246,7 +254,3 @@ sub inBucket {
 
   return undef;
 }
-
-
-
-
