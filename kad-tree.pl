@@ -192,7 +192,7 @@ print join("\n", @legend) . "\n";
 print "\t}\n";
 
 print "}\n\n\n";
-print "/* perl kad.pl | dot -Tgif -Ograph */\n\n";
+print "/* perl kad-tree.pl | dot -Tgif -Ograph */\n\n";
 
 
 
