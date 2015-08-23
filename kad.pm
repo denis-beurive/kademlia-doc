@@ -1,41 +1,15 @@
-# This script builds a series of 32 graphs.
-# Please note that the actual script is designed for nodes which IDs take five bits (the value of $NODE_LENGTH).
-# Thus, in decimal, the IDs' values spread from 0 to 31.
-# If you change the value of of $NODE_LENGTH, make sure to modify the function getColor().
-#
-# Usage: perl kad-list.pl | dot -Tgif -Ograph
-
 use strict;
+use warnings;
+use Data::Dumper;
+use color;
 use bigint;
 
-# -------------------------------------------------------------------
-# Configuration
-#
-# Do not change the value of $NODE_LENGTH unless you change the
-# function getColor().
-# -------------------------------------------------------------------
-
-my $NODE_LENGTH = 5;        # Number of bits used to represent a node's ID.
-
-# -------------------------------------------------------------------
-# Build the series of graphs.
-# -------------------------------------------------------------------
-
-for (my $node=0; $node<(2**$NODE_LENGTH)-1; $node++) {
-  my $n = undef;
-
-  $n = sprintf( "%05b", $node);
-  createGraph($n);
-}
-
-exit(0);
-
-# -------------------------------------------------------------------
-# Functions.
-# -------------------------------------------------------------------
+use vars qw (@ISA @EXPORT);
+@ISA = qw(Exporter);
+@EXPORT = qw(&createGraph);
 
 sub createGraph {
-  my ($inNode) = @_;
+  my ($inNumberOfBitPerId, $inNode, $inBucketPalette) = @_;
 
   # -----------------------------------------------------------------
   # Variables.
@@ -43,7 +17,7 @@ sub createGraph {
 
   my %nodes        = ();    # Tree's nodes.
   my @dot          = ();    # Dot's (GraphViz) instructions.
-  my $r            = $NODE_LENGTH-1;
+  my $r            = $inNumberOfBitPerId-1;
   my @peers        = ();
   my %buckets      = ();
   my @legend       = ();
@@ -53,19 +27,19 @@ sub createGraph {
   # Initialize buckets.
   # -----------------------------------------------------------------
 
-  for (my $i=0; $i<$NODE_LENGTH; $i++) {
+  for (my $i=0; $i<$inNumberOfBitPerId; $i++) {
     my $min   = 2 ** $i;
     my $max   = 2 ** ($i + 1);
-    my @color = getColor($i);
+    my $color = getBucketColor($inBucketPalette, $min);
 
-    $buckets{$i} = [$min, $max, $color[0], $color[1]];
+    $buckets{$i} = [$min, $max, $color->{'bg'}, $color->{'fg'}];
   }
 
   # -----------------------------------------------------------------
   # Create the tree's nodes.
   # -----------------------------------------------------------------
 
-  for (my $level=1; $level<=$NODE_LENGTH; $level++) {
+  for (my $level=1; $level<=$inNumberOfBitPerId; $level++) {
     my %levelNodes = ();
     my $left       = rigthPadding($r--);
     my $leftChild  = rigthPadding($r);
@@ -74,14 +48,14 @@ sub createGraph {
       my $id     = sprintf("%0${level}b", $i);
       my $childs = undef;
 
-      if ($level < $NODE_LENGTH) {
+      if ($level < $inNumberOfBitPerId) {
          my $n0 = "${id}0";
          my $n1 = "${id}1";
 
          $childs = ["\"${n0}${leftChild}\" [label = \"0\"]", "\"${n1}$leftChild\" [label = \"1\"]"];
 
          # Keep the peer's nodes IDs.
-         if (length($n0) == $NODE_LENGTH) {
+         if (length($n0) == $inNumberOfBitPerId) {
             push(@peers, $n0, $n1);
          }
       }
@@ -96,7 +70,7 @@ sub createGraph {
   # Create edges.
   # -----------------------------------------------------------------
 
-  for (my $level=1; $level<=$NODE_LENGTH; $level++) {
+  for (my $level=1; $level<=$inNumberOfBitPerId; $level++) {
     foreach my $id (keys %{$nodes{$level}}) {
       my $childs = $nodes{$level}->{"$id"};
 
@@ -126,7 +100,7 @@ sub createGraph {
       next;
     }
 
-    $b        = inBucket($p, $inNode, \%buckets, $NODE_LENGTH);
+    $b        = inBucket($p, $inNode, \%buckets, $inNumberOfBitPerId);
     $bgcolor  = $b->{'bg'};
     $fgcolor  = $b->{'fg'};
     $distance = oct("0b$p") ^ oct("0b$inNode");
@@ -139,7 +113,7 @@ sub createGraph {
     push(@dot, "$nodeP -> $nodeDistance [style=invis];");
   }
 
-  for (my $level=1; $level<$NODE_LENGTH; $level++) {
+  for (my $level=1; $level<$inNumberOfBitPerId; $level++) {
     my $ns = $nodes{$level};
 
     foreach my $id (keys %{$ns}) {
@@ -150,8 +124,8 @@ sub createGraph {
 
       $min  =~ s/\./0/g;
       $max  =~ s/\./1/g;
-      $bMin =  inBucket($min, $inNode, \%buckets, $NODE_LENGTH);
-      $bMax =  inBucket($max, $inNode, \%buckets, $NODE_LENGTH);
+      $bMin =  inBucket($min, $inNode, \%buckets, $inNumberOfBitPerId);
+      $bMax =  inBucket($max, $inNode, \%buckets, $inNumberOfBitPerId);
 
       if ($bMin->{'bucket'} == $bMax->{'bucket'}) {
          my $bg = $bMin->{'bg'};
@@ -168,7 +142,7 @@ sub createGraph {
   # Dump GravViph's representation.
   # -----------------------------------------------------------------
 
-  for (my $i=0; $i<$NODE_LENGTH; $i++) {
+  for (my $i=0; $i<$inNumberOfBitPerId; $i++) {
     my $min = $buckets{$i}->[0];
     my $max = $buckets{$i}->[1];
     my $bg  = $buckets{$i}->[2];
@@ -254,12 +228,6 @@ sub distance {
   return $res;
 }
 
-sub getColor {
-  my ($inIndex) = @_;
-  my @colors = ('#000058', '#D67573', '#C16CF2', '#2230D8', '#97A1E9');
-  return (@colors[$inIndex], 'white');
-}
-
 sub inBucket {
   my ($inNodeId, $inRefNodeId, $inBuckets, $inNodeIdLength) = @_;
   my $d = distance($inNodeId, $inRefNodeId, $inNodeIdLength);
@@ -275,3 +243,5 @@ sub inBucket {
 
   return undef;
 }
+
+1;

@@ -1,0 +1,8 @@
+# from (included) ; to (excluded) ; color
+
+0;1;#00FF00;#000000
+1;2;#C16CF2;#FFFFFF
+2;4;#D67573;#FFFFFF
+4;8;#2230D8;#FFFFFF
+8;16;#000058;#FFFFFF
+16;32;#97A1E9;#FFFFFF
