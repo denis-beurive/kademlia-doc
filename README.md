@@ -27,7 +27,7 @@ The number in parentheses (in the rectangles that represent distant nodes) is th
 For example, the distance between the (current) node `00010` and the (distant) node `00001` is `3` (`b00010 xor b00001 = b00011`, which is `3` in decimal). 
 Please note that the colors match the ones used for the previous image ([kad-tree.gif](images/kad-tree.gif)).
 
-! [kad-grid-buckets.gif](images/kad-grid-buckets.gif)
+![kad-grid-buckets.gif](images/kad-grid-buckets.gif)
 
 > This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl --palette=buckets.pal --type=buckets | dot -Tgif -Ograph`
 
