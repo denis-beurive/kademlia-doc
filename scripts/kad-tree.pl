@@ -1,17 +1,32 @@
-
+# Given a node (identified by its ID) this script draws all lower subtrees that don't contain the node.
+# If no node is given, the script will produce as many images as there are nodes (the number of nodes is
+# given by the value of the parameter "bits").
+#
+# Usage:
 # perl kad-tree.pl --bits=5 --node=01010 | dot -Tgif -Ograph
-# perl kad-tree.pl --bits=5 --node=01010 --palette=buckets.pal | dot -Tgif -Ograph
-# perl kad-tree.pl --bits=5  --palette=buckets.pal | dot -Tgif -Ograph
-
+# perl kad-tree.pl --bits=5 --node=01010 --palette=config/buckets.pal | dot -Tgif -Ograph
+# perl kad-tree.pl --bits=5  --palette=config/buckets.pal | dot -Tgif -Ograph
 
 use strict;
+use warnings FATAL => 'all';
 use bigint;
-use kad;
 use Getopt::Long;
 
+BEGIN {
+  use File::Spec ();
+  sub __DIR__ () {
+    my $level = shift || 0;
+    my $file = (caller $level)[1];
+    File::Spec->rel2abs(join '', (File::Spec->splitpath($file))[0, 1])
+  }
+  sub DIRECTORY_SEPERATOR {
+    return $^O eq "MSWin32" ? '\\' : '/';
+  }
 
+  use lib sprintf('%s%smodules', __DIR__, DIRECTORY_SEPERATOR);
+}
+use kad;
 
-my $palettePath    = undef;
 my %palette        = ();
 my $cliPalettePath = undef;
 my $cliNode        = undef;

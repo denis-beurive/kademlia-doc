@@ -14,13 +14,13 @@ And, for the graphical representations we assume that the node IDs are 5 bits lo
 The image [kad-tree.gif](images/kad-tree.gif) shows:
 * the _current node_ (which ID is `01010`) within the binary tree that represents the nodes space.
 * the 5 successively lower subtrees that don't contain the current node.
-  Each subtree is given a color (see [buckets.pal](scripts/buckets.pal)).
+  Each subtree is given a color (see [buckets.pal](scripts/config/buckets.pal)).
   The subtree that contains the unique current node is given the color `#00FF00`.
   The subtree that contains the 2 _distant nodes_ closest to the _current node_ is given the color `#C16CF2`...
 
 ![kad-tree.gif](images/kad-tree.gif)
 
-> This image has been generated using the script [kad-tree.pl](scripts/kad-tree.pl): `perl kad-tree.pl --bits=5 --node=01010 --palette=buckets.pal | dot -Tgif -Ograph`
+> This image has been generated using the script [kad-tree.pl](scripts/kad-tree.pl): `perl kad-tree.pl --bits=5 --node=01010 --palette=config/buckets.pal | dot -Tgif -Ograph`
 
 The image [kad-grid-buckets.gif](images/kad-grid-buckets.gif) shows the contents of the 5 successively lower subtrees for all nodes within the nodes spaces.
 The number in parentheses (in the rectangles that represent distant nodes) is the distance between the _distant node_ and the _current one_.
@@ -29,12 +29,12 @@ Please note that the colors match the ones used for the previous image ([kad-tre
 
 ![kad-grid-buckets.gif](images/kad-grid-buckets.gif)
 
-> This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl --palette=buckets.pal --type=buckets | dot -Tgif -Ograph`
+> This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl --palette=config/buckets.pal --type=buckets | dot -Tgif -Ograph`
 
 The image [kad-grid-peers.gif](images/kad-grid-peers.gif) is similar to the image [kad-grid-buckets.gif](images/kad-grid-buckets.gif).
-The difference is that each node is given a unique color (see [peers.pal](scripts/peers.pal)). For example, the node `11111` is given the color `#8d9150`.
+The difference is that each node is given a unique color (see [peers.pal](scripts/config/peers.pal)). For example, the node `11111` is given the color `#8d9150`.
 
 ![kad-grid-peers.gif](images/kad-grid-peers.gif)
 
-> This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl  --type=peers | dot -Tgif -Ograph`
+> This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl --type=peers | dot -Tgif -Ograph`
 

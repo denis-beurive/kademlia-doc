@@ -1,12 +1,30 @@
+# This script creates 2 representations:
+# - the first representation shows the contents of all lower subtrees. Each subtree is given a unique color.
+# - the second representation is similar to the first one, except that each node is given a unique colour.
+#
 # Usage:
-#   perl kad-grid.pl --palette=buckets.pal --type=buckets | dot -Tgif -Ograph
-#   perl kad-grid.pl  --type=peers | dot -Tgif -Ograph
+# perl kad-grid.pl --palette=config/buckets.pal --type=buckets | dot -Tgif -Ograph
+# perl kad-grid.pl --type=peers | dot -Tgif -Ograph
 
 use strict;
-use warnings;
+use warnings FATAL => 'all';
 use Data::Dumper;
-use color;
 use Getopt::Long;
+
+BEGIN {
+  use File::Spec ();
+  sub __DIR__ () {
+    my $level = shift || 0;
+    my $file = (caller $level)[1];
+    File::Spec->rel2abs(join '', (File::Spec->splitpath($file))[0, 1])
+  }
+  sub DIRECTORY_SEPERATOR {
+    return $^O eq "MSWin32" ? '\\' : '/';
+  }
+
+  use lib sprintf('%s%smodules', __DIR__, DIRECTORY_SEPERATOR);
+}
+use color;
 
 my $NODE_LENGTH = 5;
 my @nodeIds     = ();
