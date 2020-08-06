@@ -9,6 +9,16 @@ Within this document we use the following terms:
 
 And, for the graphical representations we assume that the node IDs are 5 bits long (instead of 160). 
 
+# Math
+
+let `x` be an natural number encoded on `n` bits.
+
+![](images/xor-math.png)
+
+
+
+
+
 # Kademlia nodes space
 
 The image [kad-tree.gif](images/kad-tree.gif) shows:

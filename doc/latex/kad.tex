@@ -1,0 +1,20 @@
+
+\documentclass{basic}
+\usepackage{mathtools}
+\newcommand*\xor{\oplus}
+
+\begin{document}
+
+\[0 \leq x \leq 2^n-1\]
+\[x \xor x = 0\]
+\[x \xor 0 = x\]
+\[x \xor y = y \xor x\]
+\[(x \xor y) \xor z = x \xor (y \xor z)\]
+\[(a \xor b) \xor (b \xor c) = a \xor (b \xor b) \xor c  = (a \xor 0) \xor c = a \xor c\]
+\[a = b \xor c \Leftrightarrow c = b \xor a\]
+
+\[\bar{x} = x \xor (2^n-1)\]
+\[x \xor \bar{x} = 2^n-1\]
+
+
+\end{document}
