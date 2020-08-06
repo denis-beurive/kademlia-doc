@@ -11,13 +11,9 @@ And, for the graphical representations we assume that the node IDs are 5 bits lo
 
 # Math
 
-let `x` be an natural number encoded on `n` bits.
+Let `x` be a natural number encoded on `n` bits.
 
 ![](images/xor-math.png)
-
-
-
-
 
 # Kademlia nodes space
 
@@ -31,6 +27,10 @@ The image [kad-tree.gif](images/kad-tree.gif) shows:
 ![kad-tree.gif](images/kad-tree.gif)
 
 > This image has been generated using the script [kad-tree.pl](scripts/kad-tree.pl): `perl kad-tree.pl --bits=5 --node=01010 --palette=config/buckets.pal | dot -Tgif -Ograph`
+
+You can visualise the tree representations for all nodes within the nodes space:
+
+[00000](images/tree-00000.gif), [00001](images/tree-00001.gif), [00010](images/tree-00010.gif), [00011](images/tree-00011.gif), [00100](images/tree-00100.gif), [00101](images/tree-00101.gif), [00110](images/tree-00110.gif), [00111](images/tree-00111.gif), [01000](images/tree-01000.gif), [01001](images/tree-01001.gif), [01010](images/tree-01010.gif), [01011](images/tree-01011.gif), [01100](images/tree-01100.gif), [01101](images/tree-01101.gif), [01110](images/tree-01110.gif), [01111](images/tree-01111.gif), [10000](images/tree-10000.gif), [10001](images/tree-10001.gif), [10010](images/tree-10010.gif), [10011](images/tree-10011.gif), [10100](images/tree-10100.gif), [10101](images/tree-10101.gif), [10110](images/tree-10110.gif), [10111](images/tree-10111.gif), [11000](images/tree-11000.gif), [11001](images/tree-11001.gif), [11010](images/tree-11010.gif), [11011](images/tree-11011.gif), [11100](images/tree-11100.gif), [11101](images/tree-11101.gif), [11110](images/tree-11110.gif), [11111](images/tree-11111.gif)
 
 The image [kad-grid-buckets.gif](images/kad-grid-buckets.gif) shows the contents of the 5 successively lower subtrees for all nodes within the nodes spaces.
 The number in parentheses (in the rectangles that represent distant nodes) is the distance between the _distant node_ and the _current one_.
