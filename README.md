@@ -15,6 +15,10 @@ Let `x` be a natural number encoded on `n` bits.
 
 ![](images/xor-math.png)
 
+If `d(x,y)` is the distance between `x` and `y`:
+
+![](images/distances.png)
+
 # Kademlia nodes space
 
 The image [kad-tree.gif](images/kad-tree.gif) shows:

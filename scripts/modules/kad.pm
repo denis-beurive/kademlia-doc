@@ -41,8 +41,8 @@ sub createGraph {
 
   for (my $level=1; $level<=$inNumberOfBitPerId; $level++) {
     my %levelNodes = ();
-    my $left       = rigthPadding($r--);
-    my $leftChild  = rigthPadding($r);
+    my $left       = rightPadding($r--);
+    my $leftChild  = rightPadding($r);
 
     for (my $i=0; $i<2**${level}; $i++) {
       my $id     = sprintf("%0${level}b", $i);
@@ -198,7 +198,7 @@ END
   print "/* perl kad-list.pl | dot -Tgif -Ograph */\n\n";
 }
 
-sub rigthPadding {
+sub rightPadding {
   my ($n, $padding) = @_;
   my $s   = '';
 
