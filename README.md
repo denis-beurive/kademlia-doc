@@ -67,4 +67,9 @@ Let's say that a node identifier is encoded on 8 bits (`id_length = 8`). In this
 * The third column represents the _condition_ that must be verified by `id`.
 * The last column represents the number of nodes which IDs verify the _condition_.
 
-[](images/k-buckets-1.png)
+![k-buckets-1.png](images/k-buckets-1.png)
+
+# Links
+
+* [Kademlia: A Design Specification](https://xlattice.sourceforge.net/components/protocol/kademlia/specs.html)
+
