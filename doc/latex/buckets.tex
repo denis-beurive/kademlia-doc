@@ -1,0 +1,35 @@
+\documentclass{basic}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\newcommand*\xor{\oplus}
+\newcommand*\BitAnd{\mathbin{\&}}
+\newcommand*\BitOr{\mathbin{|}}
+\newcommand*\ShiftLeft{\ll}
+\newcommand*\ShiftRight{\gg}
+\newcommand*\BitNeg{\ensuremath{\mathord{\sim}}}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+
+\begin{itemize}
+  \item ID of the current node: \(x_7 x_6 x_5 x_4 x_3 x_2 x_1 x_0\) (\(x_7\): most significant bit, \(x_0\): least significant bit).
+  \item \(d\): distance between the current node and the node which ID is \(id\).
+\end{itemize}
+
+
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    k-bucket & distance & condition & number of nodes \\
+    \hline
+	0 & \(1 \leq d \leq 2\)     & \((id \ShiftRight 0 \BitAnd x_7 x_6 x_5 x_4 x_3 x_2 x_1 \bar{x_0}) == 0\) & 1 \\
+	1 & \(2 \leq d \leq 4\)     & \((id \ShiftRight 1 \BitAnd x_7 x_6 x_5 x_4 x_3 x_2 \bar{x_1}) == 0\)     & 2 \\  
+	2 & \(4 \leq d \leq 8\)     & \((id \ShiftRight 2 \BitAnd x_7 x_6 x_5 x_4 x_3 \bar{x_2}) == 0\)         & 4 \\
+	3 & \(8 \leq d \leq 16\)    & \((id \ShiftRight 3 \BitAnd x_7 x_6 x_5 x_4 \bar{x_3}) == 0\)             & 8 \\
+	4 & \(16 \leq d \leq 32\)   & \((id \ShiftRight 4 \BitAnd x_7 x_6 x_5 \bar{x_4}) == 0\)                 & 16 \\
+	5 & \(32 \leq d \leq 64\)   & \((id \ShiftRight 5 \BitAnd x_7 x_6 \bar{x_5}) == 0\)                     & 32 \\
+	6 & \(64 \leq d \leq 128\)  & \((id \ShiftRight 6 \BitAnd x_7 \bar{x_6}) == 0\)                         & 64 \\
+	7 & \(128 \leq d \leq 256\) & \((id \ShiftRight 7 \BitAnd \bar{x_7}) == 0\)                             & 128 \\
+	\hline
+\end {tabular}
+
+\end{document}

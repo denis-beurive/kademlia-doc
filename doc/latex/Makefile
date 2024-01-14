@@ -10,13 +10,16 @@ LATEX_EXE     = /usr/bin/lualatex
 LATEX_OPTIONS = -halt-on-error -shell-escape -interaction=nonstopmode --output-format=pdf
 PDF_VIEWER    = xdg-open
 
-all: kad.pdf distances.pdf
+all: kad.pdf distances.pdf buckets.pdf
 
 kad.pdf: kad.tex basic.cls
-	${LATEX_EXE} ${LATEX_OPTIONS} $< && echo "SUCCESS" && ${PDF_VIEWER} $@
+	${LATEX_EXE} ${LATEX_OPTIONS} $< && echo "SUCCESS" # && ${PDF_VIEWER} $@
 
 distances.pdf: distances.tex basic.cls
-	${LATEX_EXE} ${LATEX_OPTIONS} $< && echo "SUCCESS" && ${PDF_VIEWER} $@
+	${LATEX_EXE} ${LATEX_OPTIONS} $< && echo "SUCCESS" # && ${PDF_VIEWER} $@
+
+buckets.pdf: buckets.tex basic.cls
+	${LATEX_EXE} ${LATEX_OPTIONS} $< && echo "SUCCESS" # && ${PDF_VIEWER} $@
 
 clean:
 	rm -f *.log *.out *.aux

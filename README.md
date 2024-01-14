@@ -52,3 +52,19 @@ The difference is that each node is given a unique color (see [peers.pal](script
 
 > This image has been generated using the script [kad-grid.pl](scripts/kad-grid.pl): `perl kad-grid.pl --type=peers | dot -Tgif -Ograph`
 
+# The routing table
+
+## The k-buckets
+
+A bucket may contain up to `k` nodes.
+
+The number of buckets is equal to the number of bits used to represent a node ID.
+
+Let's say that a node identifier is encoded on 8 bits (`id_length = 8`). In this case, the routing table contains 8 buckets.
+
+* The first column represents the bucket's index.
+* The second column represents the distance between the current node and the node which ID is `id`.
+* The third column represents the _condition_ that must be verified by `id`.
+* The last column represents the number of nodes which IDs verify the _condition_.
+
+[](images/k-buckets-1.png)
