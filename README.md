@@ -68,6 +68,7 @@ Let's say that a node identifier is encoded on 8 bits (`id_length = 8`). In this
 * The last column represents the number of nodes which IDs verify the _condition_.
 
 ![k-buckets-1.png](images/k-buckets-1.png)
+![k-buckets-2.png](images/k-buckets-2.png)
 
 # Links
 

@@ -13,6 +13,7 @@
 
 \begin{itemize}
   \item ID of the current node: \(x_7 x_6 x_5 x_4 x_3 x_2 x_1 x_0\) (\(x_7\): most significant bit, \(x_0\): least significant bit).
+  \item ID of the distant node: \(y_7 y_6 y_5 y_4 y_3 y_2 y_1 y_0\) (\(y_7\): most significant bit, \(y_0\): least significant bit).
   \item \(d\): distance between the current node and the node which ID is \(id\).
 \end{itemize}
 
@@ -29,6 +30,23 @@
 	5 & \(32 \leq d \leq 64\)   & \((id \ShiftRight 5 \BitAnd x_7 x_6 \bar{x_5}) == 0\)                     & 32 \\
 	6 & \(64 \leq d \leq 128\)  & \((id \ShiftRight 6 \BitAnd x_7 \bar{x_6}) == 0\)                         & 64 \\
 	7 & \(128 \leq d \leq 256\) & \((id \ShiftRight 7 \BitAnd \bar{x_7}) == 0\)                             & 128 \\
+	\hline
+\end {tabular}
+
+\break
+
+\begin{tabular}{|l|l|}
+    \hline
+    k-bucket & condition \\
+    \hline
+	0 & \((y_7 y_6 y_5 y_4 y_3 y_2 y_1 y_0 \BitAnd x_7 x_6 x_5 x_4 x_3 x_2 x_1 \bar{x_0}) == 0\) \\
+	1 & \((y_7 y_6 y_5 y_4 y_3 y_2 y_1     \BitAnd x_7 x_6 x_5 x_4 x_3 x_2 \bar{x_1})     == 0\) \\  
+	2 & \((y_7 y_6 y_5 y_4 y_3 y_2         \BitAnd x_7 x_6 x_5 x_4 x_3 \bar{x_2})         == 0\) \\
+	3 & \((y_7 y_6 y_5 y_4 y_3             \BitAnd x_7 x_6 x_5 x_4 \bar{x_3})             == 0\) \\
+	4 & \((y_7 y_6 y_5 y_4                 \BitAnd x_7 x_6 x_5 \bar{x_4})                 == 0\) \\
+	5 & \((y_7 y_6 y_5                     \BitAnd x_7 x_6 \bar{x_5})                     == 0\) \\
+	6 & \((y_7 y_6                         \BitAnd x_7 \bar{x_6})                         == 0\) \\
+	7 & \((y_7                             \BitAnd \bar{x_7})                             == 0\) \\
 	\hline
 \end {tabular}
 
